@@ -1,4 +1,4 @@
-const validateEmail = (email: string) => {
+const validateEmail = (email?: string) => {
 	if (!email) return false;
 
 	const emailRegex = /\S+@\S+\.\S+/;

@@ -7,12 +7,10 @@ const login = async (req: Request, res: Response) => {
 	try {
 		const { email } = req.body;
 		if (!validators.validateEmail(email!)) {
-			return res
-				.status(400)
-				.json({
-					message: "Please provide a valid email ID",
-					success: false,
-				});
+			return res.status(400).json({
+				message: "Please provide a valid email ID",
+				success: false,
+			});
 		}
 
 		let customer = await customerServices.checkIfCustomerExists({
@@ -23,8 +21,8 @@ const login = async (req: Request, res: Response) => {
 		}
 
 		const token = tokenHelpers.generateJwtToken({
-			email: customer.email,
-			customer_id: customer.customer_id,
+			email: customer?.email,
+			customer_id: customer?.customer_id,
 		});
 		res.cookie("token", token);
 		res.status(200).json({ message: "Login successful", success: true });

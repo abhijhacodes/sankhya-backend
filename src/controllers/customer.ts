@@ -1,12 +1,10 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { customerServices } from "../db/services/customer";
+import { AuthenticatedRequest } from "../types/common";
 
-const getCustomerById = async (
-	req: Request & { user?: any },
-	res: Response
-) => {
+const getCustomerById = async (req: AuthenticatedRequest, res: Response) => {
 	try {
-		const { customer_id } = req?.user;
+		const { customer_id } = req?.customer!;
 		const customer = await customerServices.getCustomerById({
 			customer_id,
 		});
@@ -27,9 +25,9 @@ const getCustomerById = async (
 	}
 };
 
-const generateAPIKey = async (req: Request & { user?: any }, res: Response) => {
+const generateAPIKey = async (req: AuthenticatedRequest, res: Response) => {
 	try {
-		const { customer_id } = req?.user;
+		const { customer_id } = req?.customer!;
 		const customer = await customerServices.getCustomerById({
 			customer_id,
 		});

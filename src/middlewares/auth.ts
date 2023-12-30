@@ -1,22 +1,26 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
+
 import { tokenHelpers } from "../utils/tokens";
+import { AuthenticatedRequest } from "../types/common";
+import { CustomerModel } from "../types/models";
 
 const populateUser = async (
-	req: Request & { user?: any },
+	req: AuthenticatedRequest,
 	res: Response,
 	next: NextFunction
 ) => {
-	const tokenResult = tokenHelpers.verifyJwtToken(req?.cookies?.token);
-	if (!tokenResult) {
+	const verifyTokenResult = tokenHelpers.verifyJwtToken(req?.cookies?.token);
+	if (!verifyTokenResult) {
 		return res
 			.status(401)
 			.json({ message: "Unauthorized", success: false });
-	} else if (tokenResult === "expired") {
+	} else if (verifyTokenResult === "expired") {
 		return res
 			.status(403)
 			.json({ message: "Session expired", success: false });
 	}
-	req.user = tokenResult;
+
+	req.customer = verifyTokenResult as CustomerModel;
 	next();
 };
 
