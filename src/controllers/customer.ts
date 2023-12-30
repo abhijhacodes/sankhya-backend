@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { customerServices } from "../db/services/customer";
 
-export const getCustomerById = async (
+const getCustomerById = async (
 	req: Request & { user?: any },
 	res: Response
 ) => {
 	try {
-		const { customer_id } = req.user;
+		const { customer_id } = req?.user;
 		const customer = await customerServices.getCustomerById({
 			customer_id,
 		});
@@ -27,12 +27,9 @@ export const getCustomerById = async (
 	}
 };
 
-export const generateAPIKey = async (
-	req: Request & { user?: any },
-	res: Response
-) => {
+const generateAPIKey = async (req: Request & { user?: any }, res: Response) => {
 	try {
-		const { customer_id } = req.user;
+		const { customer_id } = req?.user;
 		const customer = await customerServices.getCustomerById({
 			customer_id,
 		});
@@ -59,4 +56,9 @@ export const generateAPIKey = async (
 			success: false,
 		});
 	}
+};
+
+export const customerControllers = {
+	getCustomerById,
+	generateAPIKey,
 };

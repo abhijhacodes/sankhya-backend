@@ -5,7 +5,7 @@ const checkIfCustomerExists = async ({ email }: { email: string }) => {
 		`SELECT * FROM customers WHERE email = $1`,
 		[email]
 	);
-	return result.rows[0];
+	return result?.rows[0];
 };
 
 const createNewCustomer = async ({ email }: { email: string }) => {
@@ -13,7 +13,7 @@ const createNewCustomer = async ({ email }: { email: string }) => {
 		`INSERT INTO customers(email) VALUES($1) RETURNING *`,
 		[email]
 	);
-	return result.rows[0];
+	return result?.rows[0];
 };
 
 const getCustomerById = async ({ customer_id }: { customer_id: string }) => {
@@ -21,7 +21,7 @@ const getCustomerById = async ({ customer_id }: { customer_id: string }) => {
 		`SELECT * FROM customers WHERE customer_id = $1`,
 		[customer_id]
 	);
-	return result.rows[0];
+	return result?.rows[0];
 };
 
 const generateAPIKey = async ({ customer_id }: { customer_id: string }) => {
@@ -29,7 +29,7 @@ const generateAPIKey = async ({ customer_id }: { customer_id: string }) => {
 		`UPDATE customers SET api_key = gen_random_uuid() WHERE customer_id = $1 RETURNING api_key`,
 		[customer_id]
 	);
-	return result.rows[0]?.api_key;
+	return result?.rows[0]?.api_key;
 };
 
 export const customerServices = {

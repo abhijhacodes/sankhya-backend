@@ -1,10 +1,18 @@
 import express from "express";
-import { generateAPIKey, getCustomerById } from "../controllers/customer";
 import { authMiddlewares } from "../middlewares/auth";
+import { customerControllers } from "../controllers/customer";
 
 const router = express.Router();
 
-router.get("/", authMiddlewares.populateUser, getCustomerById);
-router.post("/api-key", authMiddlewares.populateUser, generateAPIKey);
+router.get(
+	"/",
+	authMiddlewares.populateUser,
+	customerControllers.getCustomerById
+);
+router.post(
+	"/api-key",
+	authMiddlewares.populateUser,
+	customerControllers.generateAPIKey
+);
 
 export default router;

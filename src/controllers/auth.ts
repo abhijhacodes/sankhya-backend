@@ -3,13 +3,16 @@ import { customerServices } from "../db/services/customer";
 import { tokenHelpers } from "../utils/tokens";
 import { validators } from "../utils/validators";
 
-export const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
 	try {
 		const { email } = req.body;
-		if (!validators.validateEmail(email)) {
+		if (!validators.validateEmail(email!)) {
 			return res
 				.status(400)
-				.json({ message: "Invalid email", success: false });
+				.json({
+					message: "Please provide a valid email ID",
+					success: false,
+				});
 		}
 
 		let customer = await customerServices.checkIfCustomerExists({
@@ -32,4 +35,8 @@ export const login = async (req: Request, res: Response) => {
 			success: false,
 		});
 	}
+};
+
+export const authControllers = {
+	login,
 };
