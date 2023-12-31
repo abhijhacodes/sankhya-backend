@@ -7,7 +7,7 @@ dotenv.config();
 const worker = new Worker("events", eventControllers.processAndStoreEvent, {
 	connection: {
 		host: process.env.REDIS_HOST,
-		port: parseInt(process.env.REDIS_PORT as string),
+		port: 6379,
 	},
 });
 
