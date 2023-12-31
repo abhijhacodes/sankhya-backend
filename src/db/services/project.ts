@@ -2,6 +2,8 @@ import dbConnectionPool from "../connection";
 import {
 	CreateProjectInput,
 	CustomerIdInput,
+	ProjectAPIKeyInput,
+	ProjectAPIKeyOutput,
 	ProjectServiceOutput,
 } from "../../types/common";
 
@@ -26,7 +28,18 @@ const createNewProject = async ({
 	return result?.rows[0];
 };
 
+const getProjectByAPIKey = async ({
+	api_key,
+}: ProjectAPIKeyInput): ProjectAPIKeyOutput => {
+	const result = await dbConnectionPool.query(
+		`SELECT project_id FROM projects WHERE api_key = $1`,
+		[api_key]
+	);
+	return result?.rows[0]?.project_id;
+};
+
 export const projectServices = {
 	createNewProject,
 	checkIfCustomerHasProject,
+	getProjectByAPIKey,
 };
