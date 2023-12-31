@@ -11,3 +11,12 @@ export interface ProjectModel {
 	customer_id: string;
 	created_at: Date;
 }
+
+export interface EventModel {
+	event_id: string;
+	project_id: string;
+	city: string;
+	state: string;
+	country: string;
+	created_at: Date;
+}

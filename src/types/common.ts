@@ -25,3 +25,10 @@ export type ProjectAPIKeyInput = {
 };
 export type ProjectServiceOutput = Promise<ProjectModel | undefined>;
 export type ProjectAPIKeyOutput = Promise<string | undefined>;
+
+export type CreateEventInput = {
+	project_id: string;
+	city: string;
+	state: string;
+	country: string;
+};
