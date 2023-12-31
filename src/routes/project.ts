@@ -1,13 +1,13 @@
 import express from "express";
 import { authMiddlewares } from "../middlewares/auth";
-import { customerControllers } from "../controllers/customer";
+import { projectControllers } from "../controllers/project";
 
 const router = express.Router();
 
-router.get(
+router.post(
 	"/",
 	authMiddlewares.populateCustomerDetails,
-	customerControllers.getCustomerById
+	projectControllers.createNewProject
 );
 
 export default router;

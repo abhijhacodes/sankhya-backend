@@ -4,7 +4,7 @@ import { tokenHelpers } from "../utils/tokens";
 import { AuthenticatedRequest } from "../types/common";
 import { CustomerModel } from "../types/models";
 
-const populateUser = async (
+const populateCustomerDetails = async (
 	req: AuthenticatedRequest,
 	res: Response,
 	next: NextFunction
@@ -25,5 +25,5 @@ const populateUser = async (
 };
 
 export const authMiddlewares = {
-	populateUser,
+	populateCustomerDetails,
 };
