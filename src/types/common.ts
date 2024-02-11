@@ -32,4 +32,13 @@ export type CreateEventInput = {
 	city: string;
 	state: string;
 	country: string;
+	screen_resolution: string;
+	operating_system: string;
 };
+
+export type GeolocationDetails = {
+	city: string;
+	state: string;
+	country: string;
+};
+export type GeolocationResponse = Promise<GeolocationDetails>;

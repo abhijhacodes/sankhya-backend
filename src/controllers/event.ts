@@ -1,14 +1,17 @@
 import { Response } from "express";
-import publisher from "../db/queues/publisher";
-import { EventCaptureRequest } from "../types/common";
 import { Job } from "bullmq";
+
+import publisher from "../db/queues/publisher";
 import { eventServices } from "../db/services/event";
+import { EventCaptureRequest } from "../types/common";
+import { getGeolocationDetails } from "../utils/helpers";
 
 const captureEvent = async (req: EventCaptureRequest, res: Response) => {
 	try {
 		const eventInputBody = {
 			project_id: req.project_id,
 			ip_address: req.socket.remoteAddress,
+			client_details: { ...req.body },
 		};
 		await publisher.add("event", eventInputBody, {
 			removeOnComplete: true,
@@ -26,27 +29,18 @@ const captureEvent = async (req: EventCaptureRequest, res: Response) => {
 
 const processAndStoreEvent = async (job: Job) => {
 	try {
-		const { project_id, ip_address } = job.data;
-		const geoLocationAPIURL = `${process.env.GEOLOCATION_API_URL}/${ip_address}?fields=49177`;
-		const res = await fetch(geoLocationAPIURL);
-		const data = await res.json();
-		const {
-			status,
-			message: errorMessage,
+		const { project_id, ip_address, client_details } = job.data;
+		const { city, state, country } = await getGeolocationDetails(
+			ip_address
+		);
+		await eventServices.storeEvent({
+			project_id,
 			city,
+			state,
 			country,
-			regionName: state,
-		} = data;
-		if (status === "success") {
-			await eventServices.storeEvent({
-				project_id,
-				city,
-				state,
-				country,
-			});
-		} else {
-			console.log("Error in processing event: ", errorMessage);
-		}
+			screen_resolution: client_details?.screenResolution ?? "Unknown",
+			operating_system: client_details?.operatingSystem ?? "Unknown",
+		});
 	} catch (error) {
 		console.log("Error in processing event: ", error);
 	}

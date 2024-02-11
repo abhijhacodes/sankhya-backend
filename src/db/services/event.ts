@@ -6,10 +6,12 @@ const storeEvent = async ({
 	city,
 	state,
 	country,
+	screen_resolution,
+	operating_system,
 }: CreateEventInput) => {
 	await dbConnectionPool.query(
-		`INSERT INTO events(project_id, city, state, country) VALUES($1, $2, $3, $4)`,
-		[project_id, city, state, country]
+		`INSERT INTO events(project_id, city, state, country, screen_resolution, operating_system) VALUES($1, $2, $3, $4, $5, $6)`,
+		[project_id, city, state, country, screen_resolution, operating_system]
 	);
 };
 
