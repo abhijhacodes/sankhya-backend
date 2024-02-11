@@ -49,6 +49,7 @@ CREATE TABLE customers (
 CREATE TABLE projects (
     project_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     project_name TEXT NOT NULL,
+    project_client_url TEXT NOT NULL,
     api_key UUID DEFAULT gen_random_uuid(),
     customer_id UUID NOT NULL REFERENCES customers(customer_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
