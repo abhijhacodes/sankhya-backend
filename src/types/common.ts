@@ -17,14 +17,15 @@ export type CustomerIdInput = {
 export type CustomerServiceOutput = Promise<CustomerModel | undefined>;
 
 export type CreateProjectInput = {
-	project_name: string;
 	customer_id: string;
+	project_name: string;
+	project_client_url: string;
 };
 export type ProjectAPIKeyInput = {
 	api_key: string;
 };
 export type ProjectServiceOutput = Promise<ProjectModel | undefined>;
-export type ProjectAPIKeyOutput = Promise<string | undefined>;
+export type ProjectAPIKeyOutput = Promise<Partial<ProjectModel> | undefined>;
 
 export type CreateEventInput = {
 	project_id: string;

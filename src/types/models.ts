@@ -7,6 +7,7 @@ export interface CustomerModel {
 export interface ProjectModel {
 	project_id: string;
 	project_name: string;
+	project_client_url: string;
 	api_key: string;
 	customer_id: string;
 	created_at: Date;

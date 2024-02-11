@@ -18,10 +18,10 @@ const createNewProject = async (req: AuthenticatedRequest, res: Response) => {
 			});
 		}
 
-		const { project_name } = req.body;
-		if (!project_name) {
+		const { project_name, project_client_url } = req.body;
+		if (!project_name || !project_client_url) {
 			return res.status(400).json({
-				message: "Project name is required",
+				message: "Project name and client URL are required.",
 				success: false,
 			});
 		}
@@ -29,6 +29,7 @@ const createNewProject = async (req: AuthenticatedRequest, res: Response) => {
 		const newProject = await projectServices.createNewProject({
 			customer_id,
 			project_name,
+			project_client_url,
 		});
 		return res.status(200).json({
 			message: "New project created successfully",
