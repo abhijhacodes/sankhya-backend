@@ -12,16 +12,15 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-	cors({
-		origin: process.env.SANKHYA_FRONTEND_URL,
-	})
-);
 
-app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/customer", customerRoute);
-app.use("/api/v1/event", eventRoute);
-app.use("/api/v1/project", projectRoute);
+const corsOptions = {
+	origin: process.env.SANKHYA_FRONTEND_URL,
+};
+
+app.use("/api/v1/auth", cors(corsOptions), authRoute);
+app.use("/api/v1/customer", cors(corsOptions), customerRoute);
+app.use("/api/v1/project", cors(corsOptions), projectRoute);
+app.use("/api/v1/event", cors(), eventRoute);
 
 const port = process.env.SERVER_PORT || 8080;
 app.listen(port, () => {
