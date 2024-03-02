@@ -1,4 +1,4 @@
-export enum ValidAnalyticsEndpoints {
+export enum AnalyticsEndpoint {
 	TotalVisitors = "totalVisitors",
 	VisitorsTrend = "visitorsTrend",
 	TopCities = "topCities",

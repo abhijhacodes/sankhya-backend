@@ -48,3 +48,8 @@ export type AnalyticsServiceInput = {
 	start_date: string;
 	end_date: string;
 };
+
+export type TrafficTrendOutput = {
+	period: string;
+	total_visitors: string;
+}[];

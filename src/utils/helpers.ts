@@ -1,5 +1,9 @@
 import { Request } from "express";
-import { GeolocationResponse } from "../types/common";
+import {
+	AnalyticsServiceInput,
+	GeolocationResponse,
+	TrafficTrendOutput,
+} from "../types/common";
 
 export const getClientURLFromRequest = (req: Request) => {
 	return req.get("origin");
@@ -49,4 +53,41 @@ export const getGeolocationDetails = async (
 			country: "Unknown",
 		};
 	}
+};
+
+export const getFormattedAnalyticsServiceInput = ({
+	project_ids,
+	start_date,
+	end_date,
+}: AnalyticsServiceInput) => {
+	return [project_ids.join(","), start_date, end_date];
+};
+
+export const getParsedInt = (value: string | number) => {
+	const parsedInt = parseInt(value as string, 10);
+	return isNaN(parsedInt) ? 0 : parsedInt;
+};
+
+// The query only returns the periods with at least 1 event, this function adds the periods with 0 events in the response to generate complete hourwise trend
+export const addMissingPeriodsInTrafficTrend = (
+	trafficTrendData: TrafficTrendOutput
+) => {
+	const allHourPeriods = Array.from({ length: 24 }, (_, index) => {
+		const startHour = index.toString().padStart(2, "0");
+		const endHour = (index + 1).toString().padStart(2, "0");
+		return `${startHour}-${endHour}`;
+	});
+
+	const existingDataMap = new Map(
+		trafficTrendData.map((entry) => [
+			entry.period,
+			{ ...entry, total_visitors: getParsedInt(entry.total_visitors) },
+		])
+	);
+
+	return allHourPeriods.map((period) => ({
+		period,
+		value: (existingDataMap.get(period) || { total_visitors: 0 })
+			.total_visitors,
+	}));
 };

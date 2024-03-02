@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { AnalyticsServiceInput, AuthenticatedRequest } from "../types/common";
 import { validators } from "../utils/validators";
-import { ValidAnalyticsEndpoints } from "../utils/constants";
+import { AnalyticsEndpoint } from "../utils/constants";
 
 const validateAnalyticsEndpoint = async (
 	req: Request,
@@ -11,8 +11,8 @@ const validateAnalyticsEndpoint = async (
 ) => {
 	const { analyticsEndpoint } = req.params;
 	if (
-		!Object.values(ValidAnalyticsEndpoints).includes(
-			analyticsEndpoint as ValidAnalyticsEndpoints
+		!Object.values(AnalyticsEndpoint).includes(
+			analyticsEndpoint as AnalyticsEndpoint
 		)
 	) {
 		return res.status(404).json({
