@@ -42,3 +42,9 @@ export type GeolocationDetails = {
 	country: string;
 };
 export type GeolocationResponse = Promise<GeolocationDetails>;
+
+export type AnalyticsServiceInput = {
+	project_ids: string[];
+	start_date: string;
+	end_date: string;
+};
