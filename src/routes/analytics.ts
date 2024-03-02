@@ -1,48 +1,17 @@
 import express from "express";
+
 import { analyticsControllers } from "../controllers/analytics";
 import { authMiddlewares } from "../middlewares/auth";
+import { analyticsMiddlewares } from "../middlewares/analytics";
 
 const router = express.Router();
 
-router.post(
-	"/totalVisitors",
+router.get(
+	"/:analyticsEndpoint",
+	analyticsMiddlewares.validateAnalyticsEndpoint,
 	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTotalVisitors
-);
-router.post(
-	"/visitorsTrend",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getVisitorsTrend
-);
-router.post(
-	"/topCities",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTopCities
-);
-router.post(
-	"/topStates",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTopStates
-);
-router.post(
-	"/topCountries",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTopCountries
-);
-router.post(
-	"/operatingSystems",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getOperatingSystems
-);
-router.post(
-	"/topDeviceSizes",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTopDeviceSizes
-);
-router.post(
-	"/trafficTrend",
-	authMiddlewares.populateCustomerDetails,
-	analyticsControllers.getTrafficTrend
+	analyticsMiddlewares.validateAnalyticsRequestBody,
+	analyticsControllers.getAnalyticsData
 );
 
 export default router;

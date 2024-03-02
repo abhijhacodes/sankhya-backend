@@ -1,52 +1,29 @@
 import { Request, Response } from "express";
+import { AnalyticsServiceInput } from "../types/common";
+import { analyticsServices } from "../db/services/analytics";
+import { ValidAnalyticsEndpoints } from "../utils/constants";
 
-const getTotalVisitors = async (req: Request, res: Response) => {
+const getAnalyticsData = async (req: Request, res: Response) => {
 	try {
-	} catch (error) {}
-};
+		const { analyticsEndpoint } = req.params;
+		switch (analyticsEndpoint) {
+			case ValidAnalyticsEndpoints.TotalVisitors:
+				const totalVisitors = await analyticsServices.getTotalVisitors(
+					req.body as AnalyticsServiceInput
+				);
+				return res.status(200).json({ totalVisitors, success: true });
 
-const getVisitorsTrend = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getTopCities = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getTopStates = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getTopCountries = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getOperatingSystems = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getTopDeviceSizes = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
-};
-
-const getTrafficTrend = async (req: Request, res: Response) => {
-	try {
-	} catch (error) {}
+			default:
+				break;
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "Internal Server Error",
+			success: false,
+		});
+	}
 };
 
 export const analyticsControllers = {
-	getTotalVisitors,
-	getVisitorsTrend,
-	getTopCities,
-	getTopStates,
-	getTopCountries,
-	getOperatingSystems,
-	getTopDeviceSizes,
-	getTrafficTrend,
+	getAnalyticsData,
 };
