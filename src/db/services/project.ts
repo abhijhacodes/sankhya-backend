@@ -7,7 +7,7 @@ import {
 	ProjectServiceOutput,
 } from "../../types/common";
 
-const checkIfCustomerHasProject = async ({
+const getProjectByCustomerId = async ({
 	customer_id,
 }: CustomerIdInput): ProjectServiceOutput => {
 	const result = await dbConnectionPool.query(
@@ -41,6 +41,6 @@ const getProjectByAPIKey = async ({
 
 export const projectServices = {
 	createNewProject,
-	checkIfCustomerHasProject,
+	getProjectByCustomerId,
 	getProjectByAPIKey,
 };

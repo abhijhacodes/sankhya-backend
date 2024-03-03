@@ -5,7 +5,7 @@ import { projectServices } from "../db/services/project";
 const createNewProject = async (req: AuthenticatedRequest, res: Response) => {
 	try {
 		const { customer_id } = req?.customer!;
-		const project = await projectServices.checkIfCustomerHasProject({
+		const project = await projectServices.getProjectByCustomerId({
 			customer_id,
 		});
 
@@ -45,6 +45,31 @@ const createNewProject = async (req: AuthenticatedRequest, res: Response) => {
 	}
 };
 
+const getProjectDetails = async (req: AuthenticatedRequest, res: Response) => {
+	try {
+		const { customer_id } = req?.customer!;
+		const project = await projectServices.getProjectByCustomerId({
+			customer_id,
+		});
+		if (!project) {
+			return res.status(404).json({
+				message: "You don't have any project yet",
+				success: false,
+			});
+		}
+		return res.status(200).json({
+			project,
+			success: true,
+		});
+	} catch (error) {
+		res.status(500).json({
+			message: "Internal Server Error",
+			success: false,
+		});
+	}
+};
+
 export const projectControllers = {
 	createNewProject,
+	getProjectDetails,
 };

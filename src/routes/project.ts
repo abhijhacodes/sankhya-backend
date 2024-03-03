@@ -9,5 +9,10 @@ router.post(
 	authMiddlewares.populateCustomerDetails,
 	projectControllers.createNewProject
 );
+router.get(
+	"/",
+	authMiddlewares.populateCustomerDetails,
+	projectControllers.getProjectDetails
+);
 
 export default router;
