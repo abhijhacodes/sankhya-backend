@@ -41,7 +41,8 @@ docker run -p 6379:6379 -d \
 CREATE TABLE customers (
     customer_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ```
 
@@ -52,7 +53,8 @@ CREATE TABLE projects (
     project_client_url TEXT NOT NULL,
     api_key UUID DEFAULT gen_random_uuid(),
     customer_id UUID NOT NULL REFERENCES customers(customer_id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ```
 
@@ -65,6 +67,30 @@ CREATE TABLE events (
     country TEXT NOT NULL,
     screen_resolution TEXT NOT NULL,
     operating_system TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
+```
+
+<br/>
+
+#### TRIGGERS/PROCEDURES TO UPDATE updated_at FIELD WHENEVER ANY ROW IS UPDATED
+
+```bash
+CREATE OR REPLACE FUNCTION update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+-   Create the below trigger for each of the tables in this database, i.e. customers, projects and events
+
+```bash
+CREATE TRIGGER trigger_update_updated_at
+BEFORE UPDATE ON customers
+FOR EACH ROW
+EXECUTE PROCEDURE update_updated_at();
 ```
