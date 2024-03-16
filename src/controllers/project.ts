@@ -52,9 +52,10 @@ const getProjectDetails = async (req: AuthenticatedRequest, res: Response) => {
 			customer_id,
 		});
 		if (!project) {
-			return res.status(404).json({
+			return res.status(200).json({
 				message: "You don't have any project yet",
-				success: false,
+				success: true,
+				project: null,
 			});
 		}
 		return res.status(200).json({
