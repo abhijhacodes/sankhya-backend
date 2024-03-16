@@ -65,6 +65,7 @@ CREATE TABLE events (
     city TEXT NOT NULL,
     state TEXT NOT NULL,
     country TEXT NOT NULL,
+    country_code TEXT NOT NULL,
     screen_resolution TEXT NOT NULL,
     operating_system TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
