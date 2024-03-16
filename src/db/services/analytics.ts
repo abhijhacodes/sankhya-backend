@@ -51,11 +51,11 @@ const getTopStates = async (input: AnalyticsServiceInput) => {
 
 const getTopCountries = async (input: AnalyticsServiceInput) => {
 	const result = await dbConnectionPool.query(
-		`SELECT country, COUNT(*) AS visitors_from_country FROM events WHERE project_id IN ($1) AND created_at BETWEEN $2 AND $3 GROUP BY country ORDER BY visitors_from_country DESC`,
+		`SELECT country_code, COUNT(*) AS visitors_from_country FROM events WHERE project_id IN ($1) AND created_at BETWEEN $2 AND $3 GROUP BY country_code ORDER BY visitors_from_country DESC`,
 		getFormattedAnalyticsServiceInput(input)
 	);
 	return result?.rows?.map((row) => ({
-		name: row.country,
+		name: row.country_code,
 		value: getParsedInt(row.visitors_from_country),
 	}));
 };

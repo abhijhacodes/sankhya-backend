@@ -30,14 +30,14 @@ const captureEvent = async (req: EventCaptureRequest, res: Response) => {
 const processAndStoreEvent = async (job: Job) => {
 	try {
 		const { project_id, ip_address, client_details } = job.data;
-		const { city, state, country } = await getGeolocationDetails(
-			ip_address
-		);
+		const { city, state, country, countryCode } =
+			await getGeolocationDetails(ip_address);
 		await eventServices.storeEvent({
 			project_id,
 			city,
 			state,
 			country,
+			countryCode,
 			screen_resolution: client_details?.screenResolution ?? "Unknown",
 			operating_system: client_details?.operatingSystem ?? "Unknown",
 		});

@@ -6,7 +6,7 @@ import { analyticsMiddlewares } from "../middlewares/analytics";
 
 const router = express.Router();
 
-router.get(
+router.post(
 	"/:analyticsEndpoint",
 	analyticsMiddlewares.validateAnalyticsEndpoint,
 	authMiddlewares.populateCustomerDetails,

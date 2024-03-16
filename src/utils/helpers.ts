@@ -20,7 +20,7 @@ export const getGeolocationDetails = async (
 	ipAddress: string
 ): GeolocationResponse => {
 	try {
-		const geoLocationAPIURL = `${process.env.GEOLOCATION_API_URL}/${ipAddress}?fields=49177`;
+		const geoLocationAPIURL = `${process.env.GEOLOCATION_API_URL}/${ipAddress}?fields=49179`;
 		const res = await fetch(geoLocationAPIURL);
 		const data = await res.json();
 		const {
@@ -28,6 +28,7 @@ export const getGeolocationDetails = async (
 			message: errorMessage,
 			city,
 			country,
+			countryCode,
 			regionName: state,
 		} = data;
 		if (status === "success") {
@@ -35,6 +36,7 @@ export const getGeolocationDetails = async (
 				city,
 				state,
 				country,
+				countryCode,
 			};
 		}
 		console.log(
@@ -44,6 +46,7 @@ export const getGeolocationDetails = async (
 			city: "Unknown",
 			state: "Unknown",
 			country: "Unknown",
+			countryCode: "Unknown",
 		};
 	} catch (error) {
 		console.log("Error in geolocation API: ", error);
@@ -51,6 +54,7 @@ export const getGeolocationDetails = async (
 			city: "Unknown",
 			state: "Unknown",
 			country: "Unknown",
+			countryCode: "Unknown",
 		};
 	}
 };

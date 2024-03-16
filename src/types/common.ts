@@ -27,21 +27,19 @@ export type ProjectAPIKeyInput = {
 export type ProjectServiceOutput = Promise<ProjectModel | undefined>;
 export type ProjectAPIKeyOutput = Promise<Partial<ProjectModel> | undefined>;
 
-export type CreateEventInput = {
-	project_id: string;
-	city: string;
-	state: string;
-	country: string;
-	screen_resolution: string;
-	operating_system: string;
-};
-
 export type GeolocationDetails = {
 	city: string;
 	state: string;
 	country: string;
+	countryCode: string;
 };
 export type GeolocationResponse = Promise<GeolocationDetails>;
+
+export type CreateEventInput = GeolocationDetails & {
+	project_id: string;
+	screen_resolution: string;
+	operating_system: string;
+};
 
 export type AnalyticsServiceInput = {
 	project_ids: string[];
