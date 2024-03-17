@@ -25,7 +25,6 @@ const login = async (req: Request, res: Response) => {
 			customer_id: customer?.customer_id,
 		});
 		res.cookie("token", token, {
-			sameSite: "none",
 			secure: true,
 			httpOnly: true,
 			expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
