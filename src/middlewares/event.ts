@@ -38,7 +38,6 @@ const validateAPIKey = async (
 		req.project_id = projectDetails.project_id;
 		next();
 	} catch (error) {
-		console.log("Error in validating API key: ", error);
 		return res.status(500).json({
 			message: "Internal server error",
 			success: false,

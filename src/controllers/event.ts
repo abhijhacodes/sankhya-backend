@@ -27,7 +27,6 @@ const captureAndStoreEvent = async (
 
 		res.status(200).json({ message: "Event captured", success: true });
 	} catch (error) {
-		console.log("Error in capturing event: ", error);
 		return res.status(500).json({
 			message: "Internal server error",
 			success: false,

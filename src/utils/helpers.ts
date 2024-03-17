@@ -48,9 +48,6 @@ export const getGeolocationDetails = async (
 				countryCode,
 			};
 		}
-		console.log(
-			`Could not get geolocation details for IP (${ipAddress}) : ${errorMessage}`
-		);
 		return {
 			city: "Unknown",
 			state: "Unknown",
@@ -58,7 +55,6 @@ export const getGeolocationDetails = async (
 			countryCode: "Unknown",
 		};
 	} catch (error) {
-		console.log("Error in geolocation API: ", error);
 		return {
 			city: "Unknown",
 			state: "Unknown",

@@ -17,7 +17,6 @@ const getCustomerById = async (req: AuthenticatedRequest, res: Response) => {
 
 		res.status(200).json({ customer, success: true });
 	} catch (error) {
-		console.log(`Error in getting customer by id: ${error}`);
 		res.status(500).json({
 			message: "Internal Server Error",
 			success: false,
