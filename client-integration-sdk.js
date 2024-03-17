@@ -19,7 +19,7 @@ function captureSankhyaEvent(apiKey) {
 				return reject("You have already captured an event.");
 			}
 
-			const url = "http://localhost:3000/api/v1/event";
+			const url = "http://localhost:8080/api/v1/event";
 			const options = {
 				method: "POST",
 				headers: {
@@ -33,8 +33,16 @@ function captureSankhyaEvent(apiKey) {
 			};
 			const response = await fetch(url, options);
 			const data = await response.json();
-			updateEventCaptureStatus();
-			resolve(data);
+
+			if (data.success) {
+				updateEventCaptureStatus();
+				resolve(data);
+			} else {
+				reject(
+					data.message ??
+						"Failed to capture event. Please try again later."
+				);
+			}
 		} catch (error) {
 			reject(
 				error.message ??
