@@ -3,7 +3,7 @@ import { UUID } from "crypto";
 
 import { projectServices } from "../db/services/project";
 import { EventCaptureRequest } from "../types/common";
-import { checkIfUUIDIsValid, getClientURLFromRequest } from "../utils/helpers";
+import { checkIfUUIDIsValid, getClientURLsFromRequest } from "../utils/helpers";
 
 const validateAPIKey = async (
 	req: EventCaptureRequest,
@@ -25,7 +25,9 @@ const validateAPIKey = async (
 
 		if (
 			!projectDetails?.project_id ||
-			projectDetails?.project_client_url !== getClientURLFromRequest(req)
+			!getClientURLsFromRequest(req).includes(
+				projectDetails?.project_client_url!
+			)
 		) {
 			return res.status(401).json({
 				message: "You are not authorized to perform this action",

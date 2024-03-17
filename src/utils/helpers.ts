@@ -5,8 +5,17 @@ import {
 	TrafficTrendOutput,
 } from "../types/common";
 
-export const getClientURLFromRequest = (req: Request) => {
-	return req.get("origin");
+export const getClientURLsFromRequest = (req: Request) => {
+	const origin = req.get("origin") ?? "";
+	const urls = [origin];
+
+	urls.push(`http://${origin.replace(/^www\./, "")}`);
+	urls.push(`https://${origin.replace(/^www\./, "")}`);
+	urls.push(`http://www.${origin}`);
+	urls.push(`https://www.${origin}`);
+	urls.push(`www.${origin}`);
+
+	return urls;
 };
 
 export const checkIfUUIDIsValid = (uuid: string) => {
