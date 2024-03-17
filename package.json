@@ -5,17 +5,14 @@
 	"main": "dist/server.js",
 	"scripts": {
 		"build": "npx tsc",
-		"start-server": "node dist/server.js",
-		"start-worker": "node dist/db/queues/worker.js",
-		"dev": "concurrently \"nodemon src/server.ts\" \"nodemon src/db/queues/worker.ts\"",
-		"start": "concurrently \"npm run start-server\" \"npm run start-worker\""
+		"dev": "nodemon src/server.ts",
+		"start": "node dist/server.js"
 	},
 	"keywords": [],
 	"author": "Abhishek Jha",
 	"license": "ISC",
 	"dependencies": {
 		"bullmq": "^5.1.0",
-		"concurrently": "^8.2.2",
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",

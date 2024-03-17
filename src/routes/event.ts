@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
 	"/",
 	eventMiddlewares.validateAPIKey,
-	eventControllers.captureEvent
+	eventControllers.captureAndStoreEvent
 );
 
 export default router;
