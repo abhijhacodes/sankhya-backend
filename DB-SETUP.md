@@ -20,21 +20,6 @@ docker exec -it {container_id} psql -U admin sankhyadb
 
 <br/>
 
-#### SETUP REDIS WITH DOCKER:
-
--   Create and start redis
-
-```bash
-docker run -p 6379:6379 -d \
-    --name sankhya-redis \
-    -v redisdata:/data \
-    redis
-```
-
--   You can use a GUI tool like [Redis Insight](https://redis.com/redis-enterprise/redis-insight/) to interact with your redis instance
-
-<br/>
-
 #### QUERIES TO CREATE TABLES ON POSTGRESQL:
 
 ```bash

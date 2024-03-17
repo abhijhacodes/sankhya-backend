@@ -19,7 +19,6 @@ Sankhya is a B2B user analytics tool that gives you analytics about your users s
 -   [Typescript](https://www.typescriptlang.org/)
 -   [PostgreSQL](https://www.postgresql.org/) as database (No ORM, raw SQL queries for better performance)
 -   [node-postgres](https://node-postgres.com/) to interact with DB
--   [BullMQ](https://bullmq.io/) as message queue with Redis
 
 <br/>
 
@@ -43,4 +42,4 @@ yarn dev or npm run dev
 
 <br/>
 
--   See [this guide](./DB-SETUP.md) to setup your postgreSQL and Redis databases locally
+-   See [this guide](./DB-SETUP.md) to setup your postgreSQL database locally
