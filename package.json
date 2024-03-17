@@ -8,7 +8,7 @@
 		"start-server": "node dist/server.js",
 		"start-worker": "node dist/db/queues/worker.js",
 		"dev": "concurrently \"nodemon src/server.ts\" \"nodemon src/db/queues/worker.ts\"",
-		"start": "concurrently \"yarn start-server\" \"yarn start-worker\""
+		"start": "concurrently \"npm run start-server\" \"npm run start-worker\""
 	},
 	"keywords": [],
 	"author": "Abhishek Jha",
@@ -20,6 +20,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
+		"ioredis": "^5.3.2",
 		"jsonwebtoken": "^9.0.2",
 		"pg": "^8.11.3"
 	},

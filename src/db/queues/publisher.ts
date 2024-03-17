@@ -1,10 +1,12 @@
 import { Queue } from "bullmq";
+import IORedis from "ioredis";
+
+const connection = new IORedis(process.env.REDIS_SECURE_URL!, {
+	maxRetriesPerRequest: null,
+});
 
 const publisher = new Queue("events", {
-	connection: {
-		host: process.env.REDIS_HOST,
-		port: 6379,
-	},
+	connection,
 });
 
 export default publisher;

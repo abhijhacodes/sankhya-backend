@@ -1,14 +1,16 @@
 import { Worker } from "bullmq";
 import dotenv from "dotenv";
 import { eventControllers } from "../../controllers/event";
+import IORedis from "ioredis";
 
 dotenv.config();
 
+const connection = new IORedis(process.env.REDIS_SECURE_URL!, {
+	maxRetriesPerRequest: null,
+});
+
 const worker = new Worker("events", eventControllers.processAndStoreEvent, {
-	connection: {
-		host: process.env.REDIS_HOST,
-		port: 6379,
-	},
+	connection,
 });
 
 worker.on("ready", () => {
