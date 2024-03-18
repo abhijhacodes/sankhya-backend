@@ -84,7 +84,7 @@ const getTopDeviceSizes = async (input: AnalyticsServiceInput) => {
 
 const getTrafficTrend = async (input: AnalyticsServiceInput) => {
 	const result = await dbConnectionPool.query(
-		`SELECT TO_CHAR(DATE_TRUNC('hour', created_at AT TIME ZONE 'Asia/Kolkata'), 'HH24') || '-' || TO_CHAR((DATE_TRUNC('hour', created_at AT TIME ZONE 'Asia/Kolkata') + '1 hour'::interval)::timestamp, 'HH24') AS period, COUNT(*) AS total_visitors FROM events WHERE project_id IN ($1) AND created_at BETWEEN $2 AND $3 GROUP BY period ORDER BY period`,
+		`SELECT TO_CHAR(DATE_TRUNC('hour', created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata'), 'HH24') || '-' || TO_CHAR((DATE_TRUNC('hour', created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') + '1 hour'::interval)::timestamp, 'HH24') AS period, COUNT(*) AS total_visitors FROM events WHERE project_id IN ($1) AND created_at BETWEEN $2 AND $3 GROUP BY period ORDER BY period`,
 		getFormattedAnalyticsServiceInput(input)
 	);
 	return addMissingPeriodsInTrafficTrend(result?.rows);
