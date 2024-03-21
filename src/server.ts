@@ -18,7 +18,12 @@ const corsOptions: CorsOptions = {
 	origin: process.env.SANKHYA_FRONTEND_URL,
 	credentials: true,
 	methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
-	allowedHeaders: "*",
+	allowedHeaders: [
+		"Content-Type",
+		"Authorization",
+		"X-PINGOTHER",
+		"Access-Control-Allow-Credentials",
+	],
 };
 
 app.use("/api/v1/auth", cors(corsOptions), authRoute);
