@@ -8,12 +8,20 @@ import {
 export const getClientURLsFromRequest = (req: Request) => {
 	const origin = req.get("origin") ?? "";
 	const urls = [origin];
+	const parts = origin.split(".");
 
-	urls.push(`http://${origin.replace(/^www\./, "")}`);
-	urls.push(`https://${origin.replace(/^www\./, "")}`);
-	urls.push(`http://www.${origin}`);
-	urls.push(`https://www.${origin}`);
-	urls.push(`www.${origin}`);
+	const domain =
+		parts.length === 3
+			? `${parts[1]}.${parts[2]}`
+			: parts.length === 4
+			? `${parts[1]}.${parts[2]}.${parts[3]}`
+			: "";
+	if (domain.length) {
+		urls.push(`https://www.${domain}`);
+		urls.push(`https://${domain}`);
+		urls.push(`http://www.${domain}`);
+		urls.push(`http://${domain}`);
+	}
 
 	return urls;
 };
