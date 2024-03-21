@@ -17,6 +17,9 @@ app.use(cookieParser());
 const corsOptions = {
 	origin: process.env.SANKHYA_FRONTEND_URL,
 	credentials: true,
+	"Access-Control-Allow-Headers": "X-PINGOTHER, Content-Type",
+	"Access-Control-Allow-Methods":
+		"GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS",
 };
 
 app.use("/api/v1/auth", cors(corsOptions), authRoute);
