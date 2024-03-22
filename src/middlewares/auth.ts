@@ -9,7 +9,8 @@ const populateCustomerDetails = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const verifyTokenResult = tokenHelpers.verifyJwtToken(req?.cookies?.token);
+	const token = req.headers.authorization?.split(" ")[1];
+	const verifyTokenResult = tokenHelpers.verifyJwtToken(token);
 	if (!verifyTokenResult) {
 		return res
 			.status(401)
