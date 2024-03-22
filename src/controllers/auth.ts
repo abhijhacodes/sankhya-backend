@@ -27,8 +27,8 @@ const login = async (req: Request, res: Response) => {
 		res.cookie("token", token, {
 			path: "/",
 			sameSite: "none",
-			secure: false,
-			httpOnly: true,
+			secure: true,
+			httpOnly: false,
 			expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
 		});
 		res.status(200).json({ message: "Login successful", success: true });
