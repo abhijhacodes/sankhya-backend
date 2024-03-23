@@ -18,9 +18,13 @@ export const getClientURLsFromRequest = (req: Request) => {
 			: "";
 	if (domain.length) {
 		urls.push(`https://www.${domain}`);
+		urls.push(`https://www.${domain}/`);
 		urls.push(`https://${domain}`);
+		urls.push(`https://${domain}/`);
 		urls.push(`http://www.${domain}`);
+		urls.push(`http://www.${domain}/`);
 		urls.push(`http://${domain}`);
+		urls.push(`http://${domain}/`);
 	}
 
 	return urls;
@@ -40,14 +44,7 @@ export const getGeolocationDetails = async (
 		const geoLocationAPIURL = `${process.env.GEOLOCATION_API_URL}/${ipAddress}?fields=49179`;
 		const res = await fetch(geoLocationAPIURL);
 		const data = await res.json();
-		const {
-			status,
-			message: errorMessage,
-			city,
-			country,
-			countryCode,
-			regionName: state,
-		} = data;
+		const { status, city, country, countryCode, regionName: state } = data;
 		if (status === "success") {
 			return {
 				city,
