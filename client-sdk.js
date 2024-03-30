@@ -1,13 +1,3 @@
-/*
-This file contains code for client side integration SDK
-User needs to load this JS file in their project (Will serve it via some CDN)
-and when this SDK is loaded, they can use the below syntax to capture event
-
-const response = await window.sankhyaSDKv1.captureUserEvent("api-key-here");
-
-This is all that customer has to do after setting up their project
-*/
-
 function captureSankhyaEvent(apiKey) {
 	return new Promise(async (resolve, reject) => {
 		try {
@@ -53,7 +43,7 @@ function captureSankhyaEvent(apiKey) {
 }
 
 function getClientOperatingSystem() {
-	const userAgent = navigator.userAgent;
+	const platformName = navigator.platform ?? navigator.userAgent;
 	const popularOSList = [
 		{ name: "Android", value: "Android" },
 		{ name: "iOS", value: "iPhone" },
@@ -63,7 +53,7 @@ function getClientOperatingSystem() {
 	];
 
 	for (const os of popularOSList) {
-		if (userAgent.includes(os.value)) {
+		if (platformName.includes(os.value)) {
 			return os.name;
 		}
 	}
