@@ -9,7 +9,7 @@ function captureSankhyaEvent(apiKey) {
 				return reject("You have already captured an event.");
 			}
 
-			const url = "https://sankhya.cyclic.app/api/v1/event";
+			const url = "https://sankhya-9kzfvqga.b4a.run/api/v1/event";
 			const options = {
 				method: "POST",
 				headers: {
