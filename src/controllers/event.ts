@@ -2,7 +2,10 @@ import { Response } from "express";
 
 import { eventServices } from "../db/services/event";
 import { EventCaptureRequest } from "../types/common";
-import { getGeolocationDetails } from "../utils/helpers";
+import {
+	getGeolocationDetails,
+	getIpAddressFromRequest,
+} from "../utils/helpers";
 
 const captureAndStoreEvent = async (
 	req: EventCaptureRequest,
@@ -10,15 +13,7 @@ const captureAndStoreEvent = async (
 ) => {
 	try {
 		const project_id = req.project_id!;
-		console.log(
-			"Received event request",
-			`header: '${req.headers["x-forwarded-for"]}'`,
-			`socket: '${req.socket.remoteAddress}'`
-		);
-
-		const ip_address =
-			(req.headers["x-forwarded-for"] as string) ||
-			req.socket.remoteAddress!;
+		const ip_address = getIpAddressFromRequest(req) || "";
 		const client_details = req.body;
 
 		const { city, state, country, countryCode } =

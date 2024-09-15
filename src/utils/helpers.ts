@@ -105,3 +105,10 @@ export const addMissingPeriodsInTrafficTrend = (
 			.total_visitors,
 	}));
 };
+
+export const getIpAddressFromRequest = (req: Request) => {
+	const forwardedFor = req.headers["x-forwarded-for"] as string;
+	const ipAddress = forwardedFor ? forwardedFor.split(",")[0].trim() : null;
+	const remoteAddress = req.socket.remoteAddress;
+	return ipAddress || remoteAddress;
+};
