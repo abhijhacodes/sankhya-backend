@@ -10,7 +10,11 @@ const captureAndStoreEvent = async (
 ) => {
 	try {
 		const project_id = req.project_id!;
-		console.log("Received event request", req.headers, req.socket);
+		console.log(
+			"Received event request",
+			req.headers["x-forwarded-for"],
+			req.socket.remoteAddress
+		);
 
 		const ip_address =
 			(req.headers["x-forwarded-for"] as string) ||
