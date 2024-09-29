@@ -5,6 +5,12 @@ function captureSankhyaEvent(apiKey) {
 				return reject("You can use Sankhya only on client side.");
 			}
 
+			console.log({ apiKey });
+
+			if (!apiKey || !apiKey?.length) {
+				return reject("API key missing.");
+			}
+
 			if (checkIfEventAlreadyCaptured()) {
 				return reject("You have already captured an event.");
 			}
@@ -69,6 +75,14 @@ function updateEventCaptureStatus() {
 	sessionStorage.setItem("sankhya-event-status", "captured");
 }
 
-window.sankhyaSDKv1 = {
-	captureUserEvent: captureSankhyaEvent,
-};
+function getApiKeyFromQueryParam() {
+	const scriptSrc = document.currentScript.src;
+	const keyFromUrl = new URL(scriptSrc).searchParams.get("key");
+	return keyFromUrl;
+}
+
+(async () => {
+	try {
+		await captureSankhyaEvent(getApiKeyFromQueryParam());
+	} catch (_) {}
+})();
