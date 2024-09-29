@@ -1,6 +1,6 @@
 ## Sankhya
 
-Sankhya is a B2B user analytics tool that gives you analytics about your users such as:
+Sankhya is a privacy friendly and cookie-free user analytics tool that gives you analytics about your users such as:
 
 -   Total page visits
 -   Page visits daywise trend
