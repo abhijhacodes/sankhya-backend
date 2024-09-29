@@ -5,8 +5,6 @@ function captureSankhyaEvent(apiKey) {
 				return reject("You can use Sankhya only on client side.");
 			}
 
-			console.log({ apiKey });
-
 			if (!apiKey || !apiKey?.length) {
 				return reject("API key missing.");
 			}
